@@ -14,6 +14,8 @@
 
 @interface MasterViewController () <AddToDoViewControllerDelegate>
 
+@property (strong, nonatomic) IBOutlet UISwipeGestureRecognizer *itemSwiped;
+
 @property NSMutableArray *objects;
 @end
 
@@ -21,6 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     
     ToDo *toDo1 = [[ToDo alloc] initWithTitle:@"Doge" ToDoDescription:@"Remember to call the vet and also buy food for le doge, walk the doge around the park and make sure it takes a dump so it doesn't crap on the floor at home." PriorityNumber:1 IsCompletedIndicator:NO];
     
@@ -36,7 +39,7 @@
     
     self.toDoArray = [[NSMutableArray alloc] initWithObjects:toDo1, toDo2, toDo3, toDo4, toDo5, toDo6, nil];
     
-
+    
 }
 
 
@@ -75,26 +78,29 @@
     
     return self.toDoArray.count;
     
-    }
+}
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     CustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"listCell" forIndexPath:indexPath];
-                                 
-                                 ToDo *toDo = self.toDoArray[indexPath.row];
-                                 
-                                 
-                                 cell.titleLabel.text = [NSString stringWithFormat:@"%@", toDo.title];
-                                 
-                                 cell.descriptionLabel.text = [NSString stringWithFormat:@"%@", toDo.toDoDescription];
     
-                                cell.priorityLabel.text = [NSString stringWithFormat:@"%d", toDo.priorityNumber];
+    ToDo *toDo = self.toDoArray[indexPath.row];
     
-                                 // Configure the cell...
-                                 
-                                 return cell;
-                                 
+    
+    cell.titleLabel.attributedText = [MasterViewController string:toDo.title withStrikeThrough:toDo.isCompletedIndicator];
+    
+    cell.descriptionLabel.attributedText = [MasterViewController string:toDo.toDoDescription withStrikeThrough:toDo.isCompletedIndicator];
+    
+    
+    cell.priorityLabel.text = [NSString stringWithFormat:@"%d", toDo.priorityNumber];
+    
+    // Configure the cell...
+    
+    return cell;
+    
+    
+    
 }
 
 
@@ -121,6 +127,39 @@
     
 }
 
+- (IBAction)itemSwiped:(UISwipeGestureRecognizer*)sender{
+    
+    if(sender.state == UIGestureRecognizerStateRecognized) {
+        
+        CGPoint swipeLocation = [sender locationInView:self.tableView];
+        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:swipeLocation];
+        ToDo* todo = self.toDoArray[indexPath.row];
+        
+        
+        if (todo.isCompletedIndicator == NO) {
+            todo.isCompletedIndicator = YES;
+        } else {
+            todo.isCompletedIndicator = NO;
+        }
+        
+        [UIView transitionWithView:self.tableView
+                          duration:0.5f
+                           options:UIViewAnimationOptionTransitionCrossDissolve
+                        animations:^(void)
+         
+         {
+             [self.tableView reloadData];
+         }
+                        completion:nil];
+        
+        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        
+    }
+    
+    
+}
+
+
 
 #pragma Segue
 
@@ -135,7 +174,7 @@
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
         
         detailVC.toDo = self.toDoArray[indexPath.row];
-
+        
         
         
     }
@@ -150,6 +189,11 @@
     
     
     
+}
+
++ (NSAttributedString*) string:(NSString*) string withStrikeThrough:(BOOL)strikethrough
+{
+    return [[NSAttributedString alloc]initWithString:string attributes:strikethrough ? @{NSStrikethroughStyleAttributeName :@(NSUnderlineStyleSingle)} : @{}];
 }
 
 
