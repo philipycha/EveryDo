@@ -21,17 +21,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    ToDo *toDo1 = [[ToDo alloc] initWithTitle:@"Doge" ToDoDescription:@"Remember to call the vet and also buy food for le doge" PriorityNumber:1 IsCompletedIndicator:NO];
+    ToDo *toDo1 = [[ToDo alloc] initWithTitle:@"Doge" ToDoDescription:@"Remember to call the vet and also buy food for le doge, walk the doge around the park and make sure it takes a dump so it doesn't crap on the floor at home." PriorityNumber:1 IsCompletedIndicator:NO];
     
-    ToDo *toDo2 = [[ToDo alloc] initWithTitle:@"Buy Groceries" ToDoDescription:@"Buy: cheese, chicken breast, cabbage, filet mignon, ribeye, buns, sausage" PriorityNumber:2 IsCompletedIndicator:NO];
+    ToDo *toDo2 = [[ToDo alloc] initWithTitle:@"Buy Groceries" ToDoDescription:@"Buy: cheese, chicken breast, cabbage, filet mignon, ribeye, buns, sausage, as you can see all of this is for a bbq. Make sure you also buy things for your everyday lunch and stuff you know what you like." PriorityNumber:2 IsCompletedIndicator:NO];
     
-    ToDo *toDo3 = [[ToDo alloc] initWithTitle:@"Call Mom" ToDoDescription:@"Update mom on current situation, daily feedback" PriorityNumber:2 IsCompletedIndicator:NO];
+    ToDo *toDo3 = [[ToDo alloc] initWithTitle:@"Call Mom" ToDoDescription:@"Update mom on current situation, daily feedback. blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah" PriorityNumber:2 IsCompletedIndicator:NO];
     
-    ToDo *toDo4 = [[ToDo alloc] initWithTitle:@"Plan Vacation" ToDoDescription:@"Research locations, cities, hotel, flights, all good spots make list" PriorityNumber:3 IsCompletedIndicator:NO];
+    ToDo *toDo4 = [[ToDo alloc] initWithTitle:@"Plan Vacation" ToDoDescription:@"Research locations, cities, hotel, flights, all good spots make list. If you can't find anything that you like, prepare to spend your vacation at home, where you'll do nothing but eat food and gain weight. good stuff." PriorityNumber:3 IsCompletedIndicator:NO];
     
-    ToDo *toDo5 = [[ToDo alloc] initWithTitle:@"Play Basketball" ToDoDescription:@"Call the boys, let's play some pick up, where we going to go? Probably the Oval" PriorityNumber:2 IsCompletedIndicator:NO];
+    ToDo *toDo5 = [[ToDo alloc] initWithTitle:@"Play Basketball" ToDoDescription:@"Call the boys, let's play some pick up, where we going to go? Probably the Oval. Remember to bring your Oval card cause last time you didn't and you had to pay 17 bucks which is a total rip off." PriorityNumber:2 IsCompletedIndicator:NO];
     
-    ToDo *toDo6 = [[ToDo alloc] initWithTitle:@"Finish Work" ToDoDescription:@"Whatever that's left to do for today, partition some time to do some extra on it" PriorityNumber:1 IsCompletedIndicator:NO];
+    ToDo *toDo6 = [[ToDo alloc] initWithTitle:@"Finish Work" ToDoDescription:@"Whatever that's left to do for today, partition some time to do some extra on it. If you don't finish the work you'll get your ass beat. the end." PriorityNumber:1 IsCompletedIndicator:NO];
     
     self.toDoArray = [[NSMutableArray alloc] initWithObjects:toDo1, toDo2, toDo3, toDo4, toDo5, toDo6, nil];
     
@@ -124,6 +124,25 @@
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
     }
+}
+
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    
+    if ([segue.identifier isEqualToString:@"toDetailVC"]) {
+        
+        DetailViewController *detailVC = segue.destinationViewController;
+        
+        CustomTableViewCell *cell = (CustomTableViewCell*)sender;
+        
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+        
+        detailVC.toDo = self.toDoArray[indexPath.row];
+
+        
+        
+    }
+    
+    
 }
 
 

@@ -7,9 +7,10 @@
 //
 
 #import "DetailViewController.h"
-#import "ToDo.h"
 
 @interface DetailViewController ()
+
+@property (weak, nonatomic) IBOutlet UILabel *detailLabel;
 
 @end
 
@@ -27,6 +28,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     [self configureView];
+    
+     self.detailLabel.text = self.toDo.toDoDescription;
        
 }
 
