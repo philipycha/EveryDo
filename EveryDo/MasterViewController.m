@@ -9,6 +9,7 @@
 #import "MasterViewController.h"
 #import "DetailViewController.h"
 #import "ToDo.h"
+#import "CustomTableViewCell.h"
 
 @interface MasterViewController ()
 
@@ -77,21 +78,36 @@
 #pragma mark - Table View
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    
+    return self.toDoArray.count;
+    
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.objects.count;
-}
+    
+    return self.toDoArray.count;
+    
+    }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-
-    NSDate *object = self.objects[indexPath.row];
-    cell.textLabel.text = [object description];
-    return cell;
+    
+    CustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"listCell" forIndexPath:indexPath];
+                                 
+                                 ToDo *toDo = self.toDoArray[indexPath.row];
+                                 
+                                 
+                                 cell.titleLabel.text = [NSString stringWithFormat:@"%@", toDo.title];
+                                 
+                                 cell.descriptionLabel.text = [NSString stringWithFormat:@"%@", toDo.toDoDescription];
+    
+                                cell.priorityLabel.text = [NSString stringWithFormat:@"%d", toDo.priorityNumber];
+    
+                                 // Configure the cell...
+                                 
+                                 return cell;
+                                 
 }
 
 
