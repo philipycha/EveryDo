@@ -14,6 +14,8 @@
 
 @property (strong, nonatomic) DetailViewController *detailViewController;
 
+@property (nonatomic, strong) NSMutableArray * toDoArray;
+
 
 @end
 

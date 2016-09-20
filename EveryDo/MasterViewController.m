@@ -8,6 +8,7 @@
 
 #import "MasterViewController.h"
 #import "DetailViewController.h"
+#import "ToDo.h"
 
 @interface MasterViewController ()
 
@@ -18,12 +19,22 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    
+    ToDo *toDo1 = [[ToDo alloc] initWithTitle:@"Doge" ToDoDescription:@"Remember to call the vet and also buy food for le doge" PriorityNumber:1 IsCompletedIndicator:NO];
+    
+    ToDo *toDo2 = [[ToDo alloc] initWithTitle:@"Buy Groceries" ToDoDescription:@"Buy: cheese, chicken breast, cabbage, filet mignon, ribeye, buns, sausage" PriorityNumber:2 IsCompletedIndicator:NO];
+    
+    ToDo *toDo3 = [[ToDo alloc] initWithTitle:@"Call Mom" ToDoDescription:@"Update mom on current situation, daily feedback" PriorityNumber:2 IsCompletedIndicator:NO];
+    
+    ToDo *toDo4 = [[ToDo alloc] initWithTitle:@"Plan Vacation" ToDoDescription:@"Research locations, cities, hotel, flights, all good spots make list" PriorityNumber:3 IsCompletedIndicator:NO];
+    
+    ToDo *toDo5 = [[ToDo alloc] initWithTitle:@"Play Basketball" ToDoDescription:@"Call the boys, let's play some pick up, where we going to go? Probably the Oval" PriorityNumber:2 IsCompletedIndicator:NO];
+    
+    ToDo *toDo6 = [[ToDo alloc] initWithTitle:@"Finish Work" ToDoDescription:@"Whatever that's left to do for today, partition some time to do some extra on it" PriorityNumber:1 IsCompletedIndicator:NO];
+    
+    self.toDoArray = [[NSMutableArray alloc] initWithObjects:toDo1, toDo2, toDo3, toDo4, toDo5, toDo6, nil];
+    
 
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
-    self.navigationItem.rightBarButtonItem = addButton;
-    self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 }
 
 
@@ -49,18 +60,18 @@
 }
 
 
-#pragma mark - Segues
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([[segue identifier] isEqualToString:@"showDetail"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSDate *object = self.objects[indexPath.row];
-        DetailViewController *controller = (DetailViewController *)[[segue destinationViewController] topViewController];
-        [controller setDetailItem:object];
-        controller.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
-        controller.navigationItem.leftItemsSupplementBackButton = YES;
-    }
-}
+//#pragma mark - Segues
+//
+//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+//    if ([[segue identifier] isEqualToString:@"showDetail"]) {
+//        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+//        NSDate *object = self.objects[indexPath.row];
+//        DetailViewController *controller = (DetailViewController *)[[segue destinationViewController] topViewController];
+//        [controller setDetailItem:object];
+//        controller.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
+//        controller.navigationItem.leftItemsSupplementBackButton = YES;
+//    }
+//}
 
 
 #pragma mark - Table View
