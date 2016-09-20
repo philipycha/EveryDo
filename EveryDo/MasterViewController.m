@@ -10,8 +10,9 @@
 #import "DetailViewController.h"
 #import "ToDo.h"
 #import "CustomTableViewCell.h"
+#import "AddToDoViewController.h"
 
-@interface MasterViewController ()
+@interface MasterViewController () <AddToDoViewControllerDelegate>
 
 @property NSMutableArray *objects;
 @end
@@ -61,25 +62,11 @@
 }
 
 
-//#pragma mark - Segues
-//
-//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-//    if ([[segue identifier] isEqualToString:@"showDetail"]) {
-//        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-//        NSDate *object = self.objects[indexPath.row];
-//        DetailViewController *controller = (DetailViewController *)[[segue destinationViewController] topViewController];
-//        [controller setDetailItem:object];
-//        controller.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
-//        controller.navigationItem.leftItemsSupplementBackButton = YES;
-//    }
-//}
-
-
 #pragma mark - Table View
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    return self.toDoArray.count;
+    return 1;
     
 }
 
@@ -126,6 +113,16 @@
     }
 }
 
+-(void)addContent:(ToDo *)addNewToDo {
+    
+    [self.toDoArray addObject:addNewToDo];
+    [self.tableView reloadData];
+    
+}
+
+
+#pragma Segue
+
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
     if ([segue.identifier isEqualToString:@"toDetailVC"]) {
@@ -142,8 +139,19 @@
         
     }
     
+    if ([segue.identifier isEqualToString:@"toAddVC"]) {
+        
+        AddToDoViewController *addVC = segue.destinationViewController;
+        
+        addVC.delegate = self;
+        
+    }
+    
+    
     
 }
+
+
 
 
 @end
