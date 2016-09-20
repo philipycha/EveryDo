@@ -39,7 +39,10 @@
     
     self.toDoArray = [[NSMutableArray alloc] initWithObjects:toDo1, toDo2, toDo3, toDo4, toDo5, toDo6, nil];
     
+    UISwipeGestureRecognizer *itemSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(itemSwiped:)];
     
+    [self.tableView addGestureRecognizer:itemSwipe];
+
 }
 
 
@@ -100,7 +103,6 @@
     return cell;
     
     
-    
 }
 
 
@@ -145,17 +147,12 @@
         [UIView transitionWithView:self.tableView
                           duration:0.5f
                            options:UIViewAnimationOptionTransitionCrossDissolve
-                        animations:^(void)
-         
-         {
-             [self.tableView reloadData];
-         }
+                        animations:^(void){}
                         completion:nil];
-        
-        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
         
     }
     
+    [self.tableView reloadData];
     
 }
 
