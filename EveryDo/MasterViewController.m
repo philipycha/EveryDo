@@ -16,7 +16,7 @@
 
 @property (strong, nonatomic) IBOutlet UISwipeGestureRecognizer *itemSwiped;
 
-@property NSMutableArray *objects;
+//@property NSMutableArray *objects;
 @end
 
 @implementation MasterViewController
@@ -63,10 +63,10 @@
 
 
 - (void)insertNewObject:(id)sender {
-    if (!self.objects) {
-        self.objects = [[NSMutableArray alloc] init];
+    if (!self.toDoArray) {
+        self.toDoArray = [[NSMutableArray alloc] init];
     }
-    [self.objects insertObject:[NSDate date] atIndex:0];
+    [self.toDoArray insertObject:[NSDate date] atIndex:0];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
@@ -246,7 +246,7 @@
             if (indexPath && ![indexPath isEqual:sourceIndexPath]) {
                 
                 // ... update data source.
-                [self.objects exchangeObjectAtIndex:indexPath.row withObjectAtIndex:sourceIndexPath.row];
+                [self.toDoArray exchangeObjectAtIndex:indexPath.row withObjectAtIndex:sourceIndexPath.row];
                 
                 // ... move the rows.
                 [self.tableView moveRowAtIndexPath:sourceIndexPath toIndexPath:indexPath];
@@ -281,6 +281,7 @@
         }
     }
 }
+
 
 - (UIView *)customSnapshotFromView:(UIView *)inputView {
     
